@@ -1,4 +1,4 @@
-package uepb.controller;
+package uepb.model;
 
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
