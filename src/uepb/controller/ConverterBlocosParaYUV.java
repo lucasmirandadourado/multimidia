@@ -31,6 +31,8 @@ public class ConverterBlocosParaYUV {
 		Mat imagemY = new Mat(blocoOriginal.height(), blocoOriginal.width(), CvType.CV_8UC3);
 		Mat imagemU = new Mat(blocoOriginal.height(), blocoOriginal.width(), CvType.CV_8UC3);
 		Mat imagemV = new Mat(blocoOriginal.height(), blocoOriginal.width(), CvType.CV_8UC3);
+		Mat imagemUReduzida = new Mat(blocoOriginal.height()/2, blocoOriginal.width()/2, CvType.CV_8UC3);
+		Mat imagemVReduzida = new Mat(blocoOriginal.height()/2, blocoOriginal.width()/2, CvType.CV_8UC3);
 		
 		double rgb[] = new double[3];
 		double y, u, v;
@@ -57,11 +59,51 @@ public class ConverterBlocosParaYUV {
 				imagemV.put(i, j, rgb);
 			}
 		}
+		
+		
+		int linha=0, col=0;
+		for(int i=0; i<blocoOriginal.height()-2;i+=2){
+			col=0;
+			for(int j=0; j<blocoOriginal.width()-2;j+=2){
+				
+				rgb = imagemU.get(i, j);
+				rgb = soma(rgb, imagemU.get(i, j+1));
+				rgb = soma(rgb, imagemU.get(i+1, j));
+				rgb = soma(rgb, imagemU.get(i+1, j+1));
+				rgb[0] = rgb[0]/4;
+				rgb[1] = rgb[1]/4;
+				rgb[2] = rgb[2]/4;
+				imagemUReduzida.put(linha, col, rgb);
+				
+				rgb = imagemV.get(i, j);
+				rgb = soma(rgb, imagemV.get(i, j+1));
+				rgb = soma(rgb, imagemV.get(i+1, j));
+				rgb = soma(rgb, imagemV.get(i+1, j+1));
+				rgb[0] = rgb[0]/4;
+				rgb[1] = rgb[1]/4;
+				rgb[2] = rgb[2]/4;
+				imagemVReduzida.put(linha, col, rgb);
+				
+				col++;
+			}
+			linha++;
+		}
 		Mat [] blocos = new Mat[3];
 		blocos[0] = imagemY;
-		blocos[1] = imagemU;
-		blocos[2] = imagemV;
+		blocos[1] = imagemUReduzida;
+		blocos[2] = imagemVReduzida;
+		
 		return blocos;
+	}
+
+	private double[] soma(double[] v1, double[] v2) {
+		
+		double result[] = new double[v1.length];
+		for(int i=0;i<result.length;i++){
+			result[i] = v1[i]+v2[i];
+		}
+		
+		return result;
 	}
 	
 
