@@ -5,6 +5,7 @@ import org.opencv.highgui.Highgui;
 
 import uepb.controller.ConverterBlocosParaYUV;
 import uepb.model.Bloco;
+import uepb.model.DCT;
 
 public class Main {
 
@@ -14,10 +15,10 @@ public class Main {
 
 		Mat imagemOriginal = new Mat();
 		imagemOriginal = Highgui.imread("imagem/field.bmp");
-		Bloco bloco = new Bloco(imagemOriginal, 500);
-		Mat ceu = bloco.getImagem(0,0);
-		Mat grama = bloco.getImagem(0,0);
-		Mat ceu_grama = bloco.getImagem(0,0);
+		Bloco bloco = new Bloco(imagemOriginal, 8);
+		Mat ceu = bloco.getImagem(107,557);
+		Mat grama = bloco.getImagem(339,215);
+		Mat ceu_grama = bloco.getImagem(316,83);
 		/*Highgui.imwrite("imagem/ceu.png", ceu);
 		Highgui.imwrite("imagem/grama.png", grama);*/
 		Highgui.imwrite("imagem/ceuGrama.png", ceu_grama);
@@ -35,5 +36,8 @@ public class Main {
 		Highgui.imwrite("imagem/ceuGramaY.png", ceuGramaYUV[0]);
 		Highgui.imwrite("imagem/ceuGramaU.png", ceuGramaYUV[1]);
 		Highgui.imwrite("imagem/ceuGramaV.png", ceuGramaYUV[2]);
+		
+		DCT dct = new DCT(ceu);
+		dct.calcularDCT(8, 8, 0);
 	}
 }
