@@ -9,7 +9,7 @@ public class DCT {
 	public void calcularDCT(int largura, int altura) {
 		for (int u = 0; u < largura; u++) {
 			for (int v = 0; v < altura; v++) {
-				dct = 0.25*verificar(u)*verificar(v)*valorPixel(x, y)*Math.cos(((2*x+1)*x*Math.PI)/16)*Math.sin(((2*v+1)*y*Math.PI)/16);
+				dct = 0.25*verificar(u)*verificar(v)*valorPixel(x, y)*Math.cos(((2*x+1)*x*Math.PI)/16)*Math.cos(((2*v+1)*y*Math.PI)/16);
 			}
 		}
 	}
