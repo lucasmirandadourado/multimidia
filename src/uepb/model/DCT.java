@@ -1,8 +1,5 @@
 package uepb.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.opencv.core.Mat;
 
 public class DCT {
@@ -18,7 +15,7 @@ public class DCT {
 	}
 	
 	// largura e altura vão variar de 0 a 7
-	public void calcularDCT(int largura, int altura, int tipoImagem) {
+	public void calcularDCT(int largura, int altura) {
 		
 		int matriz[][] = new int [altura][largura];
 		for (int u = 0; u < largura; u++) {
@@ -26,7 +23,7 @@ public class DCT {
 				
 				for (int x = 0; x < 7; x++) {
 					for (int y = 0; y < 7; y++) {
-						dct += imagem.get(x, y)[tipoImagem]
+						dct += imagem.get(x, y)[0]
 								* Math.cos(((2 * x + 1) * u * PI) / 16)
 								* Math.cos(((2 * y + 1) * v * PI) / 16);
 					}
@@ -69,7 +66,7 @@ public class DCT {
 			for (int j = 0; j < DCTQuantizada[0].length; j++) {
 				System.out.print(DCTQuantizada[i][j]+"\t");
 			}
-			System.out.println("\n");
+			System.out.println();
 		}
 		return DCTQuantizada;
 	}
@@ -86,5 +83,4 @@ public class DCT {
 		
 		return Q;
 	}
-
 }
