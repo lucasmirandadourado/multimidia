@@ -1,6 +1,8 @@
 package uepb.model;
 
+import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.highgui.Highgui;
 
 public class DCT {
 
@@ -16,6 +18,12 @@ public class DCT {
 	
 	// largura e altura vão variar de 0 a 7
 	public void calcularDCT(int largura, int altura) {
+		
+		if(altura==4 || largura==4){
+			redimensionaImagem();
+			altura = 8;
+			largura = 8;
+		}
 		
 		int matriz[][] = new int [altura][largura];
 		for (int u = 0; u < largura; u++) {
@@ -41,6 +49,28 @@ public class DCT {
 			System.out.println();
 		}
 		quantizacao(matriz);
+	}
+
+	private void redimensionaImagem() {
+		Mat imgRedimensionada = new Mat(imagem.height()*2, imagem.width()*2,
+				CvType.CV_8UC3);
+		int linha=0, coluna=0;
+		for (int i = 0; i < imagem.height(); i++) {
+			coluna=0;
+			for (int j = 0; j < imagem.width(); j++) {
+				imgRedimensionada.put(linha, coluna, imagem.get(i, j));
+				imgRedimensionada.put(linha, coluna+1, imagem.get(i, j));
+				imgRedimensionada.put(linha+1, coluna, imagem.get(i, j));
+				imgRedimensionada.put(linha+1, coluna+1, imagem.get(i, j));
+				
+				coluna+=2;
+			}
+			linha+=2;
+			
+		}
+		imagem = imgRedimensionada;
+		
+		Highgui.imwrite("src/uepb/icones/IM.jpg", imagem);
 	}
 
 	private double verificar(int x) {

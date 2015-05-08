@@ -55,5 +55,8 @@ public class Main {
 	
 		DCT dctHorizonte = new DCT(ceuGramaYUV[0]);
 		dctHorizonte.calcularDCT(8, 8);
+		
+		DCT dctU = new DCT(ceuYUV[1]);
+		dctU.calcularDCT(4, 4);
 	}
 }
